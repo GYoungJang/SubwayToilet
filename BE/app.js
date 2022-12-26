@@ -6,9 +6,11 @@ const app = express();
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
+const { swaggerUi, specs } = require('./swagger/swagger');
 
 dotenv.config();
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -34,9 +36,9 @@ const boardRoutes = require('./routes/boardRoutes');
 const toiletRoutes = require('./routes/toiletRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 const suggestRoutes = require('./routes/suggestRoutes');
-console.log( process.env.FEIP );
+console.log(process.env.FEIP);
 const corsOption = {
-  origin: process.env.FEIP
+  origin: process.env.FEIP,
 };
 app.use(cors(corsOption));
 app.use('/user', usersRoutes);
